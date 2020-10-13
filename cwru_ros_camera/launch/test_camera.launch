@@ -1,0 +1,19 @@
+<launch>
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="verbose" value="true"/>
+	</include>
+	
+	<!--Spawn the camera-->
+	<param
+		name="robot_description"
+		command="
+			$(find xacro)/xacro
+			'$(find cwru_ros_camera)/urdf/test_camera.urdf'
+		"
+	/>
+	<node
+		name="spawn_camera" pkg="gazebo_ros"
+		type="spawn_model" output="screen"
+		args="-param robot_description -urdf -model cam"
+	/>
+</launch>

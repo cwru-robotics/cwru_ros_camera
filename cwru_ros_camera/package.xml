@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+	<name>cwru_ros_camera</name>
+	<version>1.0.0</version>
+	<description>Improved gazebo_camera plugin.</description>
+	<maintainer email="tes77@case.edu">Tom Shkurti</maintainer>
+	<!--What is roadprintz's code licensed as?-->
+	<license>TODO</license>
+	
+	<buildtool_depend>catkin</buildtool_depend>
+	
+	<build_depend>roscpp</build_depend>	<run_depend>roscpp</run_depend>
+	<build_depend>gazebo_ros</build_depend>	<run_depend>gazebo_ros</run_depend>
+	<build_depend>gazebo_ros_control</build_depend>	<run_depend>gazebo_ros_control</run_depend>
+	<build_depend>gazebo_plugins</build_depend>	<run_depend>gazebo_plugins</run_depend>
+	
+	<export>
+		<!--This creates a plugin file called libcwru_ros_camera.so -->
+		<gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}"/>
+	</export>
+</package>

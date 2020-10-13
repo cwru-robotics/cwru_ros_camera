@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<robot name="mod_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:macro name="cwru_camera" params="parent image_topic info_topic:= k1:=0 k2:=0 k3:=0 p1:=0 p2:=0 r_u:=500 r_v:=500 c_x:=250 c_y:=250 f_x:=1600 f_y:=1600">
+	<link name="${parent}_camera_dot">
+		<!--Every element needs an inertial for some reason...-->
+		<inertial>
+			<mass value="1e-5" />
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+		</inertial>
+	</link>
+	<joint name="${parent}_camera_dot_joint" type="fixed">
+		<parent link="${parent}"/>
+		<child link="${parent}_camera_dot"/>
+		<!-- gazebo uses the x-axis of the camera frame as optical axis, which is annoying.-->
+		<!-- However, with this phantom link and rotation, you will never have to worry about it.-->
+		<origin 
+			rpy="0 -1.5707 1.5707"
+			xyz="0 0 0"
+		/>
+		<disableFixedJointLumping>true</disableFixedJointLumping>
+	</joint>
+	
+	<gazebo reference="${parent}_camera_dot">
+		<sensor type="camera" name="${parent}_camera">
+			<update_rate>0</update_rate>
+			<camera name="${parent}_camera">
+				<horizontal_fov>1.0</horizontal_fov>
+				<!--vertical_fov>1.0</vertical_fov-->
+				<image>
+					<width>${r_u}</width>
+					<height>${r_v}</height>
+					<format>R8G8B8</format>
+				</image>
+			</camera>
+			<plugin name="${parent}_camera" filename="libcwru_ros_camera.so">
+				<ImageTopicName>${image_topic}</ImageTopicName>
+				<CITopicName>${info_topic}</CITopicName>
+				<TransformName>${parent}</TransformName>
+				
+				<k1>${k1}</k1>
+				<k2>${k2}</k2>
+				<k3>${k3}</k3>
+				<p1>${p1}</p1>
+				<p2>${p2}</p2>
+				
+				<fx>${f_x}</fx>
+				<fy>${f_y}</fy>
+				<cx>${c_x}</cx>
+				<cy>${c_y}</cy>
+			</plugin>
+		</sensor>
+	</gazebo>
+</xacro:macro></robot>

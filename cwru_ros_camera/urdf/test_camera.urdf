@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<robot name="simple_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:include filename="$(find cwru_ros_camera)/modular_camera.urdf" />
+	
+	<link name="world"/>
+ 	
+	<link name="camera_optical_link">
+		<visual>
+			<origin xyz="0 0 0.0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.1 0.1 0.1"/>
+			</geometry>
+		</visual>
+		<!--Every element needs an inertial for some reason...-->
+		<inertial>
+			<mass value="1e-5" />
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+		</inertial>
+	</link>
+	<joint name="camera_optical_joint" type="fixed">
+		<parent link="world"/>
+		<child link="camera_optical_link"/>
+		<origin 
+			rpy="0 0 0"
+			xyz="0 0 0"
+		/>
+		<disableFixedJointLumping>true</disableFixedJointLumping>
+	</joint>
+	
+	<xacro:cwru_camera
+		parent="camera_optical_link"
+		image_topic="/camera/image_raw_color"
+		info_topic="/camera/camera_info"
+		k1="-0.433351"
+		k2=" 0.257538"
+		k3="-0.090683"
+		p1=" 0.000512"
+		p2=" 0.000263"
+		
+		f_x="1600.0"
+		f_y="1600.0"
+		c_x="1152"
+		c_y="648"
+		r_u="2304"
+		r_v="1296"
+	/>
+</robot>
