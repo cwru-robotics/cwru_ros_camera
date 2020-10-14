@@ -72,3 +72,7 @@ The utility includes a self-contained camera macro to which all of the necessary
 |r_v        |Horizontal image size (px).|
 
 An example use can be found in `cwru_ros_camera/urdf/test_camera.urdf`. It is run automatically by `cwru_ros_camera/launch/test_camera.launch`.
+
+### References ###
++[vimjay](https://github.com/lucasw/vimjay)
++[gazebo-ros-pkgs](https://github.com/ros-simulation/gazebo_ros_pkgs)
