@@ -24,10 +24,12 @@ sudo apt-get update
 sudo apt-get install ros-melodic-gazebo11-dev ros-melodic-gazebo11-plugins ros-melodic-gazebo11-ros ros-melodic-gazebo11-ros-control ros-melodic-gazebo11-ros-pkgs
 ```
 
-The package also requires OpenCV and cv_bridge:
+The package also requires OpenCV, cv_bridge, and image_manip:
 
 ```
 sudo apt-get install ros-melodic-opencv-apps ros-melodic-cv-bridge
+git clone https://github.com/lucasw/image_manip.git
+```
 
 ### Use ###
 
