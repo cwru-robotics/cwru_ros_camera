@@ -77,4 +77,5 @@ An example use can be found in `cwru_ros_camera/urdf/test_camera.urdf`. It is ru
 
 ### References ###
 +[vimjay](https://github.com/lucasw/vimjay)
+
 +[gazebo-ros-pkgs](https://github.com/ros-simulation/gazebo_ros_pkgs)
