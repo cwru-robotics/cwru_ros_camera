@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 	gazebo_ros
 	gazebo_plugins
 	cv_bridge
+	image_manip
 )
 
 include_directories(${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})

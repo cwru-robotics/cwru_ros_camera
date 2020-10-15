@@ -11,59 +11,11 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include <image_manip/cv_distort_image.h>
+
 namespace gazebo{
 	class ros_camera_plugin : public CameraPlugin{
 		public:
-			//From https://github.com/lucasw/vimjay/blob/master/src/standalone/cv_distort_image.cpp
-			// TODO(lucasw) mirror initUndistortRectifyMap as much as makes sense
-			// Add m1type parameter
-			// And R rectification matrix? 
-			// Need to investigate non-floating point version.
-			void initDistortMap(
-				const float fx, const float fy, const float cx, const float cy,
-				const cv::Mat distCoeffs,
-				const cv::Size size,
-				cv::Mat& map1, cv::Mat& map2
-			){
-				cv::Mat pixel_locations_src = cv::Mat(size.width * size.height, 1, CV_32FC2);
-
-				int ind = 0;
-				for (int i = 0; i < size.height; i++) {
-					for (int j = 0; j < size.width; j++) {
-						// TODO(lucasw) maybe would want x and y offsets here to make the output
-						// image bigger or smaller than the input?
-						pixel_locations_src.at<cv::Point2f>(ind, 0) = cv::Point2f(j,i);
-						++ind;
-					}
-				}
-				
-				cv::Mat K = (cv::Mat1d(3, 3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
-				cv::Mat fractional_locations_dst = cv::Mat(pixel_locations_src.size(), CV_32FC2);
-				cv::undistortPoints(pixel_locations_src, fractional_locations_dst, K, distCoeffs);
-
-				// TODO(lucasw) is there a faster way to do this?
-				// A matrix operation?
-				// If the x and y were separate matrices it would be possible,
-				// and remap does take separate x and y maps.
-				cv::Mat pixel_locations_dst = cv::Mat(size, CV_32FC2);
-				ind = 0;
-				for (int i = 0; i < size.height; i++) {
-					for (int j = 0; j < size.width; j++) {
-						const float x = fractional_locations_dst.at<cv::Point2f>(ind, 0).x * fx + cx;
-						const float y = fractional_locations_dst.at<cv::Point2f>(ind, 0).y * fy + cy;
-						pixel_locations_dst.at<cv::Point2f>(i,j) = cv::Point2f(x,y);
-						// if ((i == 0) && (j == 0))
-						//  ROS_INFO_STREAM(ind << ": " << i << " " << j << ", " << y << " " << x);
-						++ind;
-					}
-				}
-
-				map1 = pixel_locations_dst;
-				map2 = cv::Mat();
-			}
-		
-		
-		
 			sensors::SensorPtr sp;
 		
 			ros::NodeHandle nh;
@@ -159,8 +111,8 @@ namespace gazebo{
 					cv::Mat K = (cv::Mat1d(3, 3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
 					cv::Mat D = (cv::Mat1d(1, 5) << k1, k2, p1, p2, k3);
 					
-					initDistortMap(
-						fx, fy, cx, cy, D,
+					image_manip::initDistortMap(
+						K, D,
 						cv::Size(this->camera->ImageWidth(), this->camera->ImageHeight()),
 						this->map1, this->map2
 					);
