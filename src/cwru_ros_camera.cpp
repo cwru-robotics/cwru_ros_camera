@@ -208,6 +208,8 @@ namespace gazebo{
 				if(publish_ci){
 					sensor_msgs::CameraInfo ci;
 					
+					ci.header = i.header;
+					
 					ci.height = this->camera->ImageHeight();
 					ci.width = this->camera->ImageWidth();
 					
