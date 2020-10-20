@@ -55,23 +55,24 @@ The utility includes a self-contained camera macro to which all of the necessary
 />
 ```
 
-|  Argument | Description |
-|----------:|-------------|
-|parent     |The link you want the camera to attach to.|
-|image_topic|The ROS topic you want the camera output published to.|
-|info_topic |The ROS topic you want the camera info published to (optional).|
-|k1         |K1 distortion parameter (optional).|
-|k1         |K1 distortion parameter (optional).|
-|k2         |K2 distortion parameter (optional).|
-|k3         |K3 distortion parameter (optional).|
-|p1         |P1 distortion parameter (optional).|
-|p2         |P2 distortion parameter (optional).|
-|f_x        |Horizontal focal length.|
-|f_y        |Vertical focal length.|
-|c_x        |Horizontal image center (px).|
-|c_y        |Vertical image center (px).|
-|r_u        |Horizontal image size (px).|
-|r_v        |Horizontal image size (px).|
+|  Argument  | Description |
+|-----------:|-------------|
+|parent      |The link you want the camera to attach to.|
+|image_topic |The ROS topic you want the camera output published to.|
+|info_topic  |The ROS topic you want the camera info published to (optional).|
+|k1          |K1 distortion parameter (optional).|
+|k1          |K1 distortion parameter (optional).|
+|k2          |K2 distortion parameter (optional).|
+|k3          |K3 distortion parameter (optional).|
+|p1          |P1 distortion parameter (optional).|
+|p2          |P2 distortion parameter (optional).|
+|f_x         |Horizontal focal length.|
+|f_y         |Vertical focal length.|
+|c_x         |Horizontal image center (px).|
+|c_y         |Vertical image center (px).|
+|r_u         |Horizontal image size (px).|
+|r_v         |Horizontal image size (px).|
+|rupdate_rate|Maximum framrate the camera will update (in hz).|
 
 An example use can be found in `cwru_ros_camera/urdf/test_camera.urdf`. It is run automatically by `cwru_ros_camera/launch/test_camera.launch`.
 

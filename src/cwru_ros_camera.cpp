@@ -25,6 +25,8 @@ namespace gazebo{
 			
 			bool good;
 			bool publish_ci;
+			ros::Duration update_rate;
+			ros::Time last_update_time;
 			
 			double k1, k2, k3, p1, p2;
 			double fx, fy, cx, cy;
@@ -95,6 +97,12 @@ namespace gazebo{
 					p2 = e->Get<double>("p2");
 				}
 				
+				this->update_rate = ros::Duration(-1.0);
+				if(e->HasElement("UpdateRate")){
+					this->update_rate = ros::Duration(1.0 / e->Get<double>("UpdateRate"));
+				}
+				this->last_update_time = ros::Time::now();
+				
 				
 
 				this->camera->UpdateCameraIntrinsics(fx, fy, cx, cy, 0);
@@ -133,8 +141,12 @@ namespace gazebo{
 				if(!good){
 					return;
 				}
+				if(this->update_rate != ros::Duration(-1.0) && ros::Time::now() < last_update_time + this->update_rate){
+					return;
+				}
 																  		
 				common::Time sensor_update_time = this->sp->LastMeasurementTime();
+				this->last_update_time = ros::Time::now();
 				
 				//This is copied more or less in its entirety from
 				//https://github.com/ros-simulation/gazebo_ros_pkgs/blob/kinetic-devel/gazebo_plugins/src/gazebo_ros_camera_utils.cpp
