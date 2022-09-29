@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <robot name="mod_camera" xmlns:xacro="http://ros.org/wiki/xacro">
-<xacro:macro name="cwru_camera" params="parent image_topic info_topic:= k1:=0 k2:=0 k3:=0 p1:=0 p2:=0 r_u:=500 r_v:=500 c_x:=250 c_y:=250 f_x:=1600 f_y:=1600 update_rate:=20">
+<xacro:macro name="cwru_camera" params="parent image_topic info_topic:='' k1:=0 k2:=0 k3:=0 p1:=0 p2:=0 r_u:=500 r_v:=500 c_x:=250 c_y:=250 f_x:=1600 f_y:=1600 update_rate:=20">
 	<link name="${parent}_camera_dot">
 		<!--Every element needs an inertial for some reason...-->
 		<inertial>
